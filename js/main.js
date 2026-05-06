@@ -38,13 +38,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Feedback visuel sur envoi du formulaire (backend à brancher)
-    const formSubmit = document.querySelector('.form-submit');
-    if (formSubmit) {
-        formSubmit.addEventListener('click', () => {
-            formSubmit.textContent = '✓ Demande envoyée — réponse sous 2h ouvrées';
-            formSubmit.style.background = 'var(--wave)';
-            formSubmit.disabled = true;
+    // Soumission AJAX du formulaire de contact
+    const form = document.getElementById('contact-form');
+    if (form) {
+        const status = form.querySelector('#form-status');
+        const submitBtn = form.querySelector('.form-submit');
+        const initialBtnText = submitBtn ? submitBtn.textContent : '';
+
+        const setStatus = (msg, type) => {
+            if (!status) return;
+            status.textContent = msg;
+            status.classList.remove('is-success', 'is-error');
+            if (type) status.classList.add(`is-${type}`);
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            setStatus('', null);
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours…';
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok && data.ok) {
+                    form.reset();
+                    submitBtn.textContent = '✓ Demande envoyée';
+                    submitBtn.style.background = 'var(--wave)';
+                    setStatus('Merci ! Nous vous répondons sous 2h ouvrées.', 'success');
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = initialBtnText;
+                    setStatus(data.error || 'Erreur lors de l\'envoi. Merci de réessayer.', 'error');
+                }
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = initialBtnText;
+                setStatus('Connexion impossible. Merci de réessayer ou de nous appeler.', 'error');
+            }
         });
     }
 });

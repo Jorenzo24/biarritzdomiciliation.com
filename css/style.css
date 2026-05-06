@@ -280,6 +280,23 @@ nav {
     margin-top: 8px;
 }
 .form-submit:hover { background: var(--ocean-mid); transform: translateY(-1px); }
+.form-honeypot {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+.form-status {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 12px;
+    min-height: 1em;
+}
+.form-status.is-success { color: var(--wave); }
+.form-status.is-error { color: #c0392b; }
 .form-note {
     text-align: center;
     font-size: 12px;

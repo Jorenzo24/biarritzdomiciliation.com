@@ -34,7 +34,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <!-- CSS -->
-<link rel="stylesheet" href="css/style.css?v=20260506b">
+<link rel="stylesheet" href="css/style.css?v=20260506c">
 
 <!-- Schema.org LocalBusiness -->
 <script type="application/ld+json">
@@ -484,20 +484,20 @@
       </a>
       <p class="cta-mail"><a href="mailto:contact@biarritzdomiciliation.com">contact@biarritzdomiciliation.com</a></p>
     </div>
-    <div class="hero-form-card">
+    <form class="hero-form-card" id="contact-form" action="send-mail.php" method="post" novalidate>
       <h2>Demande de domiciliation</h2>
       <p>Réponse sous 2h ouvrées · Devis gratuit et sans engagement</p>
       <div class="form-group">
         <label for="nom">Nom &amp; Prénom *</label>
-        <input type="text" id="nom" name="nom" placeholder="Jean Dupont" autocomplete="name">
+        <input type="text" id="nom" name="nom" placeholder="Jean Dupont" autocomplete="name" required maxlength="120">
       </div>
       <div class="form-group">
         <label for="email">Email *</label>
-        <input type="email" id="email" name="email" placeholder="jean@exemple.com" autocomplete="email">
+        <input type="email" id="email" name="email" placeholder="jean@exemple.com" autocomplete="email" required maxlength="200">
       </div>
       <div class="form-group">
         <label for="tel">Téléphone</label>
-        <input type="tel" id="tel" name="tel" placeholder="06 00 00 00 00" autocomplete="tel">
+        <input type="tel" id="tel" name="tel" placeholder="06 00 00 00 00" autocomplete="tel" maxlength="40">
       </div>
       <div class="form-group">
         <label for="structure">Type de structure</label>
@@ -524,11 +524,16 @@
       </div>
       <div class="form-group">
         <label for="message">Message</label>
-        <textarea id="message" name="message" placeholder="Création, transfert de siège, besoins spécifiques..."></textarea>
+        <textarea id="message" name="message" placeholder="Création, transfert de siège, besoins spécifiques..." maxlength="4000"></textarea>
+      </div>
+      <div class="form-honeypot" aria-hidden="true">
+        <label for="website">Ne pas remplir ce champ</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
       </div>
       <button type="submit" class="form-submit">Envoyer ma demande →</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       <p class="form-note">Vos données sont confidentielles et ne sont jamais partagées.</p>
-    </div>
+    </form>
   </div>
 </section>
 
@@ -572,6 +577,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=20260506b"></script>
+<script src="js/main.js?v=20260506c"></script>
 </body>
 </html>

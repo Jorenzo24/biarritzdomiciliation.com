@@ -2,6 +2,8 @@
 Thumbs.db
 *.swp
 .vscode/settings.json
+.env
+.env.local
 *.env
 *.log
 node_modules/
